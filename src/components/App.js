@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Provider } from './Context/themeContext';
 import Header from './Header';
 
-const App = () => {
+class App extends Component {
+  render() {
   return (
-        <React.Fragment>
-          <Header />
-        </React.Fragment>       
+          <Provider>
+            <Header />
+          </Provider>
       )
+  }
 }
 
 export default App;

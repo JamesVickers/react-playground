@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import { Consumer } from './Context/mainContext';
+import React from 'react';
+import { Consumer } from './Context/themeContext';
 
-const Header = () => {
 
-    const [hasSubtitle, toggleHasSubtitle] = useState(true);
-
-    const toggleSubtitle = () => {
-            toggleHasSubtitle(!hasSubtitle)
-        }
-
+const Header = () => {    
     return(
         <React.Fragment>
-            <Consumer>{ ({headerText}) => {
+            <Consumer>{ ({ defaultTheme, darkTheme, currentTheme, actions }) => {
 
-            const subtitle = hasSubtitle? headerText.subTitle : 'I am not a subTitle';
-            const buttonText = `${hasSubtitle? 'Remove' : 'Add'} subtitle`;
+                const theme = (currentTheme === 'darkTheme') ? darkTheme : defaultTheme;
 
                 return(
                     <React.Fragment>
-                        <h1>{headerText.title}</h1>
-                        <h2>{subtitle}</h2>
-                        <h1>{headerText.hasSubtitle}</h1>
-                        <button onClick={toggleSubtitle}>{buttonText}</button>
+                    <div style={
+                        {
+                            color: theme.color,
+                            background: theme.background
+                        }
+                        }>
+                        <h1>Welcome</h1>
+                        <h2>{currentTheme}</h2>
+                        <button onClick={actions.updateThemeName} value={defaultTheme.name}>{defaultTheme.name}</button>
+                        <button onClick={actions.updateThemeName} value={darkTheme.name}>{darkTheme.name}</button>
+                    </div>
                     </React.Fragment>
                 )
             }}
