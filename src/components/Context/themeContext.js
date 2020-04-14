@@ -2,39 +2,45 @@ import React, { Component } from 'react';
 
 const ThemeContext = React.createContext();
 
-export class Provider extends Component {
-
-    state = {
+const themeObj = {
         defaultTheme: {
             name: 'defaultTheme',
             background: 'hsl(60, 23%, 95%)',
             color: 'hsl(0, 0%, 5%)'
-        },
+            },
         darkTheme: {
             name: 'darkTheme',
             background: 'hsl(0, 0%, 5%)',
             color: 'hsl(60, 23%, 95%)'
-        },
-        currentTheme: 'defaultTheme'
-    }
+            },
+        yellowTheme: {
+            name: 'yellowTheme',
+            background: 'hsl(47, 100%, 53%)',
+            color: 'hsl(60, 23%, 95%)'
+            }
+        };
 
-    updateThemeName = (e) => {
-        const themeName = e.target.value;
+export class Provider extends Component {
+    state = {
+        currentTheme: 'defaultTheme'
+        }
+
+    updateCurrentTheme = (e) => {  
+        const themeBtnName = e.target.value;
+        console.log(themeBtnName);
         this.setState(() => ({
-            currentTheme: themeName
+            currentTheme: themeBtnName
         }))
-    }
-    
+    } 
+      
     render() {
-        
         return(
             <ThemeContext.Provider 
             value={{
-                defaultTheme: this.state.defaultTheme,
-                darkTheme: this.state.darkTheme,
+                theme: {themeObj},
                 currentTheme: this.state.currentTheme,
                 actions: {
-                    updateThemeName: this.updateThemeName
+                    updateCurrentTheme: this.updateCurrentTheme
                 }
             }}>
                 {this.props.children}
@@ -44,3 +50,38 @@ export class Provider extends Component {
 }
 
 export const Consumer = ThemeContext.Consumer;
+
+// export const Provider = () => {
+
+//     const [currentTheme, setCurrentTheme] = useState('defaultTheme');
+
+//     const defaultTheme = {
+//         name: 'defaultTheme',
+//         background: 'hsl(60, 23%, 95%)',
+//         color: 'hsl(0, 0%, 5%)'
+//     };
+//     const darkTheme =   {
+//         name: 'darkTheme',
+//         background: 'hsl(0, 0%, 5%)',
+//         color: 'hsl(60, 23%, 95%)'
+//     };
+
+//     const updateThemeName = (e) => {
+//         const themeName = e.target.value;
+//         setCurrentTheme(themeName);
+//     }
+
+//         return(
+//         <ThemeContext.Provider 
+//         value={{
+//             defaultTheme: defaultTheme,
+//             darkTheme: darkTheme,
+//             currentTheme: {currentTheme},
+//             actions: {
+//                 updateThemeName: updateThemeName
+//             }
+//         }}>
+//             {this.props.children}
+//         </ThemeContext.Provider>
+//     )  
+// }

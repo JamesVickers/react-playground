@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Provider } from './Context/themeContext';
-import Header from './Header';
+import Page from './Page';
 
 class App extends Component {
   render() {
   return (
           <Provider>
-            <Header />
+            <Page />
           </Provider>
       )
   }
