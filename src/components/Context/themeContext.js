@@ -2,23 +2,23 @@ import React, { Component } from 'react';
 
 const ThemeContext = React.createContext();
 
-const themeObj = {
-        defaultTheme: {
-            name: 'defaultTheme',
-            background: 'hsl(60, 23%, 95%)',
-            color: 'hsl(0, 0%, 5%)'
-            },
-        darkTheme: {
-            name: 'darkTheme',
-            background: 'hsl(0, 0%, 5%)',
-            color: 'hsl(60, 23%, 95%)'
-            },
-        yellowTheme: {
-            name: 'yellowTheme',
-            background: 'hsl(47, 100%, 53%)',
-            color: 'hsl(60, 23%, 95%)'
-            }
-        };
+const themeArray = [
+    {
+    name: 'defaultTheme',
+    background: 'hsl(60, 23%, 95%)',
+    color: 'hsl(0, 0%, 5%)'
+    },
+    {
+    name: 'darkTheme',
+    background: 'hsl(0, 0%, 5%)',
+    color: 'hsl(60, 23%, 95%)'
+    },     
+    {
+    name: 'yellowTheme',
+    background: 'hsl(47, 100%, 53%)',
+    color: 'hsl(60, 23%, 95%)'
+    }
+];
 
 export class Provider extends Component {
     state = {
@@ -27,7 +27,6 @@ export class Provider extends Component {
 
     updateCurrentTheme = (e) => {  
         const themeBtnName = e.target.value;
-        console.log(themeBtnName);
         this.setState(() => ({
             currentTheme: themeBtnName
         }))
@@ -37,7 +36,7 @@ export class Provider extends Component {
         return(
             <ThemeContext.Provider 
             value={{
-                theme: {themeObj},
+                themeArray: {themeArray},
                 currentTheme: this.state.currentTheme,
                 actions: {
                     updateCurrentTheme: this.updateCurrentTheme

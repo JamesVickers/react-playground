@@ -1,45 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Consumer } from './Context/themeContext';
 
 const Page = () => {    
+
+    const [inputValue, updateInputValue] = useState("");
+    const [inputArray, updateInputArray] = useState([]);
+
+    // const query = "";
+    // const giphyApi = `http://api.giphy.com/v1/gifs/search?q=${query}&limit=24&api_key=dc6zaTOxFJmzC`;
+
+    // componentDidMount() {
+    //     fetch('https://api.mydomain.com')
+    //       .then(response => response.json())
+    //       .then(data => this.setState({ data }));
+    //   }
+
     return(
-        <React.Fragment>
-            <Consumer>{ ({ 
-                theme,
-                currentTheme,
-                actions }) => {
+    <React.Fragment>
+        <Consumer>{ ({ 
+            themeArray,
+            currentTheme,
+            actions }) => {
 
-                const { defaultTheme, darkTheme, yellowTheme } = theme.themeObj;
-              
-                console.log(theme)
-              
+            const handleChange = (event) => {
+                updateInputValue(event.target.value);
+            }
 
-                console.log(theme.themeObj.darkTheme)
+            const removeButton = (item) => {
+                updateInputArray(inputArray.filter(a => a !== item));
+            }
 
-                return(
-                    <React.Fragment>
-                    <div style={
-                        {
-                            color: theme.themeObj[currentTheme].color,
-                            background: theme.themeObj[currentTheme].background
-                        }
-                        }>
-                        <h1>Welcome</h1>
-                        <h2>{theme.currentTheme}</h2>
-                        <button onClick={actions.updateCurrentTheme} value={defaultTheme.name}>{defaultTheme.name}</button>
-                        <button onClick={actions.updateCurrentTheme} value={darkTheme.name}>{darkTheme.name}</button>
-                        <button onClick={actions.updateCurrentTheme} value={yellowTheme.name}>{yellowTheme.name}</button>
-                    </div>
-                    </React.Fragment>
-                )
-            }}
-            </Consumer>
-        </React.Fragment>
+            const handleSubmit = (event) => {
+                event.preventDefault();
+                if (inputValue) {
+                    inputArray.push(inputValue);
+                }
+                updateInputValue("");
+            }
+            
+            const indexOfCurrentTheme = themeArray.themeArray.findIndex(x => x.name === currentTheme);
+
+            return(
+                <React.Fragment>
+                <div 
+                style={
+                    {
+                        color: themeArray.themeArray[indexOfCurrentTheme].color,
+                        background: themeArray.themeArray[indexOfCurrentTheme].background
+                    }
+                    }
+                    >
+                    <h1>Welcome</h1>
+                    <h2>{inputValue}</h2>
+                    <h2>{currentTheme}</h2>
+
+                    {themeArray.themeArray.map( (theme) => 
+                        <button key={themeArray.themeArray.indexOf(theme)} onClick={actions.updateCurrentTheme} value={theme.name}>{theme.name}</button>
+                    )}
+                    
+                    {inputArray.map( (item) =>
+                        <button key={inputArray.indexOf(item)}>{item}<span onClick={() => removeButton(item)}> x</span></button>
+                    )}
+
+                    <form onSubmit={handleSubmit}>
+                        <input type="text" value={inputValue} onChange={handleChange}></input>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+                </React.Fragment>
+            )
+        }}
+        </Consumer>
+    </React.Fragment>
     )
 }
 
 export default Page;
-
-
-// const theme = currentTheme;
-// color: state[currentTheme].color
