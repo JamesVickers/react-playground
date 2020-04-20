@@ -1,19 +1,12 @@
 import React, { useState } from 'react';
 import { Consumer } from './Context/themeContext';
+import Giphy from './Giphy';
 
 const Page = () => {    
 
     const [inputValue, updateInputValue] = useState("");
     const [inputArray, updateInputArray] = useState([]);
-
-    // const query = "";
-    // const giphyApi = `http://api.giphy.com/v1/gifs/search?q=${query}&limit=24&api_key=dc6zaTOxFJmzC`;
-
-    // componentDidMount() {
-    //     fetch('https://api.mydomain.com')
-    //       .then(response => response.json())
-    //       .then(data => this.setState({ data }));
-    //   }
+    const [giphyInputValue, updateGiphyInputValue] = useState("");
 
     return(
     <React.Fragment>
@@ -24,6 +17,11 @@ const Page = () => {
 
             const handleChange = (event) => {
                 updateInputValue(event.target.value);
+            }
+
+            const handleGiphyChange = (event) => {
+                updateGiphyInputValue(event.target.value);
+                console.log(event.target.value)
             }
 
             const removeButton = (item) => {
@@ -66,6 +64,7 @@ const Page = () => {
                         <input type="text" value={inputValue} onChange={handleChange}></input>
                         <button type="submit">Submit</button>
                     </form>
+                    <Giphy input={giphyInputValue} inputChange={handleGiphyChange}/>
                 </div>
                 </React.Fragment>
             )
