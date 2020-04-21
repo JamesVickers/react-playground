@@ -6,7 +6,6 @@ const Page = () => {
 
     const [inputValue, updateInputValue] = useState("");
     const [inputArray, updateInputArray] = useState([]);
-    const [giphyInputValue, updateGiphyInputValue] = useState("");
 
     return(
     <React.Fragment>
@@ -17,11 +16,6 @@ const Page = () => {
 
             const handleChange = (event) => {
                 updateInputValue(event.target.value);
-            }
-
-            const handleGiphyChange = (event) => {
-                updateGiphyInputValue(event.target.value);
-                console.log(event.target.value)
             }
 
             const removeButton = (item) => {
@@ -62,9 +56,9 @@ const Page = () => {
 
                     <form onSubmit={handleSubmit}>
                         <input type="text" value={inputValue} onChange={handleChange}></input>
-                        <button type="submit">Submit</button>
+                        <button type="submit">SubmitThemeName</button>
                     </form>
-                    <Giphy input={giphyInputValue} inputChange={handleGiphyChange}/>
+                    <Giphy/>
                 </div>
                 </React.Fragment>
             )

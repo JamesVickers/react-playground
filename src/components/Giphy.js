@@ -1,37 +1,59 @@
 import React, { useState, useEffect } from 'react';
 
 
-let query = 'hello';
-const giphyApi = `http://api.giphy.com/v1/gifs/search?q=${query}&limit=24&api_key=dc6zaTOxFJmzC`;
+// let query;
 
 
 const Giphy = (props) => {
     const [gifs, setGifs] = useState([]);
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState([]); 
+    const [giphyInputValue, updateGiphyInputValue] = useState("");
+    
+    const giphyApi = `http://api.giphy.com/v1/gifs/search?q=${giphyInputValue}&limit=24&api_key=dc6zaTOxFJmzC`;
+
+    const handleGiphyChange = (event) => {
+        updateGiphyInputValue(event.target.value);
+    }
 
         async function fetchData() {
             const res = await fetch(giphyApi);
             res.json()
-            .then(res => console.log(res))
-                // setGifs(res))
+            .then(res => setGifs(res))                 
             .catch(err => setErrors(err))
         }
 
-        useEffect(() => {
-            fetchData()
-          }, [])        
-
-        const handleGiphySubmit = () => {
-            query = props.input;
+        function HandleGiphySubmit() {
+            // query = giphyInputValue;
+            useEffect(() => {
+                fetchData()
+              }, [])        
         }
 
-    return  (
-        <React.Fragment>
-            <h1>{query}</h1>
-            {/* <p>{props.input}</p> */}
-            <form onSubmit={handleGiphySubmit}>
-                <input onChange={props.inputChange}></input>
+        let gifsData;
+        if(gifs.length) {
+            console.log("gifs: ", gifs)
+            gifsData = gifs.map( item => 
+            <li key={item.id}>
+                <image src={item.images.fixed_height.url} />
+            </li>
+            )
+        } else {
+            gifsData = 'no gifs here';
+        }
+
+
+        return  (
+            <React.Fragment>
+            <h2>{giphyInputValue}</h2>
+            
+            <form onSubmit={HandleGiphySubmit}>
+                <input onChange={handleGiphyChange}></input>
+                <button type="submit">SubmitGiphy</button>
             </form>
+
+            <ul>
+            {gifsData}
+            </ul>
         </React.Fragment>
     )
 }
