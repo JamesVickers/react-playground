@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 
-// let query;
-
-
 const Giphy = (props) => {
     const [gifs, setGifs] = useState([]);
     const [errors, setErrors] = useState([]); 
@@ -18,7 +15,7 @@ const Giphy = (props) => {
         async function fetchData() {
             const res = await fetch(giphyApi);
             res.json()
-            .then(res => setGifs(res))                 
+            .then(res => setGifs(res))                
             .catch(err => setErrors(err))
         }
 
@@ -41,10 +38,11 @@ const Giphy = (props) => {
             gifsData = 'no gifs here';
         }
 
-
         return  (
             <React.Fragment>
             <h2>{giphyInputValue}</h2>
+            <div>{gifs}</div>
+
             
             <form onSubmit={HandleGiphySubmit}>
                 <input onChange={handleGiphyChange}></input>

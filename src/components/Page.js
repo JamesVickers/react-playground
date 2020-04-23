@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Consumer } from './Context/themeContext';
 import Giphy from './Giphy';
+import Counter from './Counter';
 
 const Page = () => {    
 
     const [inputValue, updateInputValue] = useState("");
     const [inputArray, updateInputArray] = useState([]);
+    const [counter, updateCounter] = useState(0);
 
     return(
     <React.Fragment>
@@ -13,6 +15,8 @@ const Page = () => {
             themeArray,
             currentTheme,
             actions }) => {
+
+            const indexOfCurrentTheme = themeArray.themeArray.findIndex(x => x.name === currentTheme);
 
             const handleChange = (event) => {
                 updateInputValue(event.target.value);
@@ -29,8 +33,15 @@ const Page = () => {
                 }
                 updateInputValue("");
             }
+
+            const handleIncrement = () => {
+                updateCounter(counter + 1);
+            }
+
+            const handleDecrement = () => {
+                updateCounter(counter - 1);
+            }
             
-            const indexOfCurrentTheme = themeArray.themeArray.findIndex(x => x.name === currentTheme);
 
             return(
                 <React.Fragment>
@@ -59,6 +70,7 @@ const Page = () => {
                         <button type="submit">SubmitThemeName</button>
                     </form>
                     <Giphy/>
+                    <Counter count={counter} increment={handleIncrement} decrement={handleDecrement}/>
                 </div>
                 </React.Fragment>
             )
